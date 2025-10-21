@@ -9,8 +9,10 @@
   --color-white: #ffffff;
   --color-black: #000000;
   --color-muted: #a1a1aa; /* subtle text */
+  --color-muted-dark: #747476; /* subtle text */
   --color-border: #2a2a35; /* borders and dividers */
   --color-hover: #1f1f2a; /* hover states */
   --color-gradient-start: #e50914;
+  --color-error: red;
   --color-gradient-end: #b81d24;
 }
