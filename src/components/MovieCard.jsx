@@ -26,14 +26,17 @@ export default function MovieCard({ movie, featured = false, styles }) {
 
       {featured ? (
         <div className="absolute bottom-5 left-15 text-(--color-white) flex-col items-center justify-center z-20 gap-2">
-          <h2 className="text-4xl capitalize font-bold">{movie.title}</h2>
-          <p className="text-lg opacity-90 text-(--color-text) max-w-7xl text-justify">
+          <h2 className="text-xl lg:text-2xl xl:text-4xl capitalize font-bold">
+            {movie.title}
+          </h2>
+          <p className="text-sm opacity-90 w-full  text-ellipsis overflow-hidden text-nowrap lg:text-wrap max-w-[200px] sm:max-w-[250px] lg:max-w-7xl text-(--color-text)  text-justify">
             {movie.overview}
           </p>
           <RatingStars
             rating={movie?.vote_average?.toFixed(2)}
-            styles="text-lg"
+            styles="md:text-lg text-sm text-(--color-white)"
             showNumeric={true}
+            iconStyles="md:text-lg text-sm text-(--color-white)/50"
           />
         </div>
       ) : (

@@ -5,7 +5,7 @@ export default function RatingStars({
   rating,
   maxRating = 10,
   showNumeric = true,
-  styles = "text-sm",
+  styles = "text-sm text-gray-600",
   iconStyles = " text-lg",
 }) {
   const normalizedRating = (rating / maxRating) * 5;
@@ -52,7 +52,7 @@ export default function RatingStars({
       <div className={`flex items-center gap-1 `}>{stars}</div>
 
       {showNumeric && (
-        <span className={`${styles} text-gray-600 ml-1 font-medium`}>
+        <span className={`${styles}  ml-1 font-medium`}>
           {rating} / {maxRating}
         </span>
       )}
