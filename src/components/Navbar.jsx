@@ -4,6 +4,8 @@ import { Link, useLocation } from "react-router-dom";
 import NavLink from "./NavLink";
 import { IoMdCloseCircle } from "react-icons/io";
 import { GiHamburgerMenu } from "react-icons/gi";
+import Button from "./Button";
+import { IoLogIn } from "react-icons/io5";
 
 const links = [
   {
@@ -58,6 +60,8 @@ export default function Navbar() {
             <NavLink key={link.name} link={link} location={location} />
           ))}
         </nav>
+
+        <Button text={"Login"} icon={<IoLogIn />} styles={" border-4"} />
       </div>
 
       {/* mobile buttons */}

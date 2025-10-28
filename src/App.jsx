@@ -3,11 +3,13 @@ import { Movies, Genres, MovieDetails, ActorDetails } from "./pages/export";
 import { Routes, Route } from "react-router-dom";
 
 import { Navbar, Footer } from "./components/export";
+import ScrollToTop from "./utils/ScrollToTop";
 
 export default function App() {
   return (
     <div className="overflow-hidden">
       <Navbar />
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Movies />} />
         <Route path="/genres" element={<Genres />} />
