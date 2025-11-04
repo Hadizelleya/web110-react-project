@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useFetchHook } from "../hooks/useFetchHook";
 import { HashLoader } from "react-spinners";
@@ -12,6 +12,8 @@ import { MdOutlineFavoriteBorder } from "react-icons/md";
 import { PiPlaylistDuotone } from "react-icons/pi";
 import { IoArrowUndoSharp } from "react-icons/io5";
 import MovieCard from "../components/MovieCard";
+import { markFavorite } from "../services/auth";
+import { useAuth } from "../hooks/useAuth";
 
 const baseUrl = import.meta.env.VITE_API_URL;
 const apiKey = import.meta.env.VITE_API_KEY;
@@ -20,6 +22,9 @@ const imageUrl = import.meta.env.VITE_IMAGES_URL;
 export default function MovieDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { user, isAuthenticated, login } = useAuth();
+  const [isFavorited, setIsFavorited] = useState(false);
+
   console.log(id);
 
   const {
@@ -55,6 +60,30 @@ export default function MovieDetails() {
     );
 
   const actors = movie.credits.cast;
+  // add to favorites button
+  const addToFavorites = async () => {
+    try {
+      if (!isAuthenticated) {
+        navigate("/");
+        return;
+      }
+
+      const sessionId = localStorage.getItem("session_id");
+      if (!sessionId || !user) {
+        alert("no user available");
+        return;
+      }
+
+      const res = await markFavorite(user.id, sessionId, movie.id, true);
+      if (res && res.success) {
+        setIsFavorited((prev) => !prev);
+      } else {
+        alert("Failed to Update Favorite", res);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -174,7 +203,17 @@ export default function MovieDetails() {
             </div>
 
             <div className="flex items-center justify-center gap-2">
-              <Button text={"Favorite"} icon={<MdOutlineFavorite />} />
+              <Button
+                text={isFavorited ? "Unfavorite" : "Favorite"}
+                icon={
+                  isFavorited ? (
+                    <MdOutlineFavorite />
+                  ) : (
+                    <MdOutlineFavoriteBorder />
+                  )
+                }
+                onClick={addToFavorites}
+              />
               <Button text={"WatchList"} icon={<PiPlaylistDuotone />} />
               <Button
                 text={"Back"}
@@ -204,7 +243,11 @@ export default function MovieDetails() {
           </h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-10 h-full p-10 items-center justify-center">
             {similarMovies?.results?.slice(0, 10).map((movie) => (
-              <Link to={`/movies/${movie.id}`} className="h-full">
+              <Link
+                to={`/movies/${movie.id}`}
+                key={movie.id}
+                className="h-full"
+              >
                 <MovieCard key={movie?.id} movie={movie} />
               </Link>
             ))}

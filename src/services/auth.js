@@ -49,6 +49,29 @@ export const getAccountDetails = async (sessionId) => {
   }
 };
 
+export const markFavorite = async (
+  accountId,
+  sessionId,
+  movieId,
+  favorite = true
+) => {
+  try {
+    const { data } = await moviesApi.post(
+      `account/${accountId}/favorite`,
+      {
+        media_type: "movie",
+        media_id: movieId,
+        favorite,
+      },
+      { params: { session_id: sessionId } }
+    );
+
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const logout = () => {
   localStorage.removeItem("request_token");
   localStorage.removeItem("session_id");

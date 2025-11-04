@@ -7,7 +7,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import Button from "./Button";
 import { IoLogIn } from "react-icons/io5";
 import { useAuth } from "../hooks/useAuth";
-
+import { FaUserAlt } from "react-icons/fa";
 const links = [
   {
     name: "Movies",
@@ -72,12 +72,23 @@ export default function Navbar() {
           ))}
         </nav>
 
-        <Button
-          text={loading ? "Loading..." : isAuthenticated ? "Logout" : "Login"}
-          icon={<IoLogIn />}
-          styles={" border-4"}
-          onClick={handleAuthClick}
-        />
+        {isAuthenticated ? (
+          <Button
+            text={loading ? "Loading..." : "Profile"}
+            icon={<FaUserAlt />}
+            styles={" border-2"}
+            isLink
+            isBlank={false}
+            url={"/profile"}
+          />
+        ) : (
+          <Button
+            text={loading ? "Loading..." : "Login"}
+            icon={<IoLogIn />}
+            styles={" border-2"}
+            onClick={handleAuthClick}
+          />
+        )}
       </div>
 
       {/* mobile buttons */}
