@@ -10,7 +10,9 @@ function Button({ text, icon, onClick, styles, isLink = false, url }) {
           target="_blank"
           className={`flex items-center justify-center cursor-pointer gap-2 border-(--color-primary)/50 border p-2 rounded-md ${styles}`}
         >
-          <button className="text-(--color-primary)">{text}</button>
+          <button className="text-(--color-primary) cursor-pointer">
+            {text}
+          </button>
           {icon && <i className="text-(--color-primary) text-xl">{icon}</i>}
         </Link>
       ) : (

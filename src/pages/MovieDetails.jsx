@@ -4,6 +4,7 @@ import { useFetchHook } from "../hooks/useFetchHook";
 import { HashLoader } from "react-spinners";
 import RatingStars from "../components/RatingStars";
 import Button from "../components/Button";
+import genresIcons from "../assets/genres";
 import { TbWorld } from "react-icons/tb";
 import { MdOutlineOndemandVideo } from "react-icons/md";
 import { MdOutlineFavorite } from "react-icons/md";
@@ -89,12 +90,26 @@ export default function MovieDetails() {
           </div>
 
           {/* genres */}
-          <div className="flex items-center justify-evenly mt-10">
-            {movie.genres.map((genre) => (
-              <p className="text-xl text-(--color-muted-dark)" key={genre.id}>
-                {genre.name}
-              </p>
-            ))}
+          <div className="flex items-center justify-evenly mt-10 flex-wrap gap-4">
+            {movie.genres.map((genre) => {
+              const key = genre.name.toLowerCase();
+              const icon = genresIcons[key];
+
+              return (
+                <div className="flex items-center gap-2" key={genre.id}>
+                  {icon ? (
+                    <img
+                      src={icon}
+                      alt={`${genre.name} icon`}
+                      className="w-8 h-8 object-contain"
+                    />
+                  ) : null}
+                  <p className="text-xl text-(--color-muted-dark)">
+                    {genre.name}
+                  </p>
+                </div>
+              );
+            })}
           </div>
 
           {/* overview */}

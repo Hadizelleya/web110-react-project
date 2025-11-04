@@ -6,6 +6,7 @@ import { IoMdCloseCircle } from "react-icons/io";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Button from "./Button";
 import { IoLogIn } from "react-icons/io5";
+import { useAuth } from "../hooks/useAuth";
 
 const links = [
   {
@@ -22,6 +23,16 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
   const location = useLocation();
+  const { isAuthenticated, loading, login, logout } = useAuth();
+
+  const handleAuthClick = async () => {
+    if (loading) return;
+    if (isAuthenticated) {
+      logout();
+    } else {
+      await login();
+    }
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -61,7 +72,12 @@ export default function Navbar() {
           ))}
         </nav>
 
-        <Button text={"Login"} icon={<IoLogIn />} styles={" border-4"} />
+        <Button
+          text={loading ? "Loading..." : isAuthenticated ? "Logout" : "Login"}
+          icon={<IoLogIn />}
+          styles={" border-4"}
+          onClick={handleAuthClick}
+        />
       </div>
 
       {/* mobile buttons */}
